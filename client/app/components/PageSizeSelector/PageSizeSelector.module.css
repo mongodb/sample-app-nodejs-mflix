@@ -1,0 +1,56 @@
+/**
+ * Page Size Selector Component Styles
+ * 
+ * CSS Module for the page size selector component.
+ */
+
+.pageSizeSelector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
+}
+
+.select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+  color: #333;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.select:hover {
+  border-color: #0070f3;
+}
+
+.select:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .pageSizeSelector {
+    margin-bottom: 1.5rem;
+  }
+
+  .label {
+    font-size: 0.85rem;
+  }
+
+  .select {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+  }
+}

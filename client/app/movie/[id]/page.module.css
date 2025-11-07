@@ -1,0 +1,317 @@
+/**
+ * Movie Details Page Styles
+ * 
+ * CSS Module for the movie details page component.
+ * Provides responsive layout for displaying detailed movie information.
+ */
+
+.page {
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: #fafafa;
+}
+
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.backLink {
+  margin-bottom: 2rem;
+}
+
+.backLink a {
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.backLink a:hover {
+  color: #0051cc;
+  text-decoration: underline;
+}
+
+.successMessage {
+  background-color: #d1edff;
+  border: 1px solid #b8e6ff;
+  color: #0c5aa6;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.errorMessage {
+  background-color: #fef2f2;
+  border: 1px solid #fee2e2;
+  color: #991b1b;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.movieDetails {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 3rem;
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.posterSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.posterContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.posterContainer img {
+  object-fit: cover;
+}
+
+.posterPlaceholder {
+  width: 100%;
+  aspect-ratio: 2/3;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-weight: 500;
+  text-align: center;
+  border: 2px dashed #ddd;
+}
+
+.movieInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.basicInfo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.infoItem {
+  font-size: 1rem;
+  color: #555;
+}
+
+.infoItem strong {
+  color: #333;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.ratingsSection {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.ratingsSection h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.ratingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.ratingCard {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #e9ecef;
+}
+
+.ratingCard strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.ratingValue {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.ratingMeta {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.genres {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.genres strong {
+  color: #333;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.genreList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genreTag {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.plot,
+.fullplot {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.plot h2,
+.fullplot h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.plot p,
+.fullplot p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+.castCrew {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.crewSection h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.crewSection p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #555;
+  margin: 0;
+}
+
+.additionalInfo {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.additionalInfo h3 {
+  font-size: 1.3rem;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page {
+    padding: 1rem;
+  }
+
+  .movieDetails {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 1.5rem;
+  }
+
+  .posterContainer {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .basicInfo {
+    grid-template-columns: 1fr;
+  }
+
+  .ratingsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .infoGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 0.5rem;
+  }
+
+  .movieDetails {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .posterContainer {
+    max-width: 250px;
+  }
+
+  .ratingsGrid {
+    grid-template-columns: 1fr;
+  }
+}
