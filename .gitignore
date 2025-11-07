@@ -1,0 +1,62 @@
+#-------
+# Common
+#-------
+
+# Environment variables
+.env
+!.env.example
+*.pem
+
+#MacOS files
+.DS_Store
+
+# Dependencies
+node_modules/
+package-lock.json
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# TypeScript
+*.tsbuildinfo
+
+# Test coverage
+coverage/
+
+# Logs
+logs
+*.log
+
+#-------------------
+# Express.js Backend
+#-------------------
+
+# Build output
+dist/
+
+# Test results
+test-results.json
+
+# Optional npm cache directory
+.npm
+
+#------------------------
+# Next.js Client frontend
+#------------------------
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# vercel
+.vercel
+
+# typescript
+next-env.d.ts

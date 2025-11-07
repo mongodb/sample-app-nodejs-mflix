@@ -1,0 +1,215 @@
+/**
+ * Loading Skeleton Styles
+ * 
+ * Reusable skeleton loading animations and styles
+ */
+
+/* Base skeleton element */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* Loading animation */
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Skeleton variants */
+.skeletonText {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonTitle {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  height: 24px;
+  margin-bottom: 1rem;
+}
+
+.skeletonLargeTitle {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  height: 40px;
+  margin-bottom: 1rem;
+}
+
+.skeletonButton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 6px;
+  height: 40px;
+}
+
+.skeletonCard {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+  height: 300px;
+}
+
+.skeletonAvatar {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+.skeletonInput {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 6px;
+  height: 38px;
+}
+
+/* Size variants */
+.skeletonSmall {
+  width: 60px;
+}
+
+.skeletonMedium {
+  width: 120px;
+}
+
+.skeletonLarge {
+  width: 80%;
+}
+
+.skeletonFull {
+  width: 100%;
+}
+
+.skeletonHalf {
+  width: 50%;
+}
+
+/* Container styles */
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeletonRow {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.skeletonGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.ratingsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+/* Movie-specific skeletons */
+.movieCardSkeleton {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 16px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.posterSkeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  width: 100%;
+  height: 300px;
+}
+
+.movieInfoSkeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Page selector skeleton */
+.pageSelectorSkeleton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+/* Pagination skeleton */
+.paginationSkeleton {
+  margin: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.paginationButtonsSkeleton {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Rating card skeleton */
+.ratingCardSkeleton {
+  background: linear-gradient(90deg, #f8f8f8 25%, #e9ecef 50%, #f8f8f8 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #e9ecef;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .movieCardSkeleton {
+    padding: 12px;
+  }
+  
+  .posterSkeleton {
+    height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .posterSkeleton {
+    height: 200px;
+  }
+  
+  .paginationButtonsSkeleton {
+    gap: 0.5rem;
+  }
+}

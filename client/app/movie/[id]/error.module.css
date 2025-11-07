@@ -1,0 +1,91 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  background: #fafafa;
+}
+
+.errorCard {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.retryButton {
+  background: #0070f3;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.retryButton:hover {
+  background: #0051cc;
+}
+
+.retryButton:focus {
+  outline: 2px solid #0070f3;
+  outline-offset: 2px;
+}
+
+.backLink {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  display: inline-block;
+}
+
+.backLink:hover {
+  background: #545b62;
+}
+
+.backLink:focus {
+  outline: 2px solid #6c757d;
+  outline-offset: 2px;
+}
+
+.errorId {
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 2rem;
+  font-family: 'Courier New', monospace;
+}

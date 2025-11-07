@@ -1,0 +1,28 @@
+{
+  "name": "sample-mflix-front-end",
+  "description": "Next.js frontend for MongoDB sample mflix application demonstrating CRUD operations, aggregations, and search",
+  "license": "Apache-2.0",
+  "author": "MongoDB Documentation Team",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build --turbopack",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "next": "16.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.0",
+    "@eslint/eslintrc": "^3"
+  }
+}

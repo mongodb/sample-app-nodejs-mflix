@@ -1,0 +1,95 @@
+/**
+ * Home Page Styles
+ * 
+ * Styles specific to the home/landing page
+ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  max-width: 600px;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  letter-spacing: -0.025em;
+}
+
+.description {
+  font-size: 1.25rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background: #0066cc;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  min-width: 180px;
+}
+
+.button:hover {
+  background: #0052a3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+  }
+  
+  .page {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+  
+  .description {
+    font-size: 1rem;
+  }
+  
+  .button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+  }
+}
