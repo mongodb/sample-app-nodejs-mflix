@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Environment variables
+.env
+
+# Build output
+dist/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs
+*.log
+
+# Test coverage
+coverage/
+
+# Test results
+test-results.json
+
+# Optional npm cache directory
+.npm
+
+# macOS
+.DS_Store
+
