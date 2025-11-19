@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Express.js backend for MongoDB sample mflix application demonstrating CRUD operations, aggregations, search, and geospatial queries",
   "license": "Apache-2.0",
-  "author": "Jordan Smith",
+  "author": "MongoDB Documentation Team",
   "type": "commonjs",
   "main": "dist/app.js",
   "scripts": {
