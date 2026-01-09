@@ -208,176 +208,186 @@ export default function SearchMovieModal({
         {/* Conditional Form Fields */}
         {formData.searchType === 'mongodb-search' ? (
           <>
-            {/* MongoDB Search Fields */}
-            <div className={styles.formGrid}>
-              {/* Plot Search */}
-              <div className={styles.formGroup}>
-                <label htmlFor="plot" className={styles.label}>
-                  Plot Keywords
-                </label>
-                <input
-                  type="text"
-                  id="plot"
-                  value={formData.plot}
-                  onChange={(e) => handleInputChange('plot', e.target.value)}
-                  className={`${styles.input} ${errors.plot ? styles.inputError : ''}`}
-                  disabled={isLoading}
-                  placeholder="Exact phrase search in plot summaries"
-                />
-                {errors.plot && <span className={styles.error}>{errors.plot}</span>}
-              </div>
+            {/* Plot Search Section */}
+            <div className={styles.fieldSection}>
+              <h3 className={styles.sectionTitle}>Plot Search</h3>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="plot" className={styles.label}>
+                    Plot Keywords
+                  </label>
+                  <input
+                    type="text"
+                    id="plot"
+                    value={formData.plot}
+                    onChange={(e) => handleInputChange('plot', e.target.value)}
+                    className={`${styles.input} ${errors.plot ? styles.inputError : ''}`}
+                    disabled={isLoading}
+                    placeholder="Search in short plot summaries"
+                  />
+                  {errors.plot && <span className={styles.error}>{errors.plot}</span>}
+                </div>
 
-              {/* Full Plot Search */}
-              <div className={styles.formGroup}>
-                <label htmlFor="fullplot" className={styles.label}>
-                  Full Plot Keywords
-                </label>
-                <input
-                  type="text"
-                  id="fullplot"
-                  value={formData.fullplot}
-                  onChange={(e) => handleInputChange('fullplot', e.target.value)}
-                  className={`${styles.input} ${errors.fullplot ? styles.inputError : ''}`}
-                  disabled={isLoading}
-                  placeholder="Search in full plot descriptions"
-                />
-                {errors.fullplot && <span className={styles.error}>{errors.fullplot}</span>}
-              </div>
-
-              {/* Directors Search */}
-              <div className={styles.formGroup}>
-                <label htmlFor="directors" className={styles.label}>
-                  Directors
-                </label>
-                <input
-                  type="text"
-                  id="directors"
-                  value={formData.directors}
-                  onChange={(e) => handleInputChange('directors', e.target.value)}
-                  className={`${styles.input} ${errors.directors ? styles.inputError : ''}`}
-                  disabled={isLoading}
-                  placeholder="Director names"
-                />
-                {errors.directors && <span className={styles.error}>{errors.directors}</span>}
-              </div>
-
-              {/* Writers Search */}
-              <div className={styles.formGroup}>
-                <label htmlFor="writers" className={styles.label}>
-                  Writers
-                </label>
-                <input
-                  type="text"
-                  id="writers"
-                  value={formData.writers}
-                  onChange={(e) => handleInputChange('writers', e.target.value)}
-                  className={`${styles.input} ${errors.writers ? styles.inputError : ''}`}
-                  disabled={isLoading}
-                  placeholder="Writer names"
-                />
-                {errors.writers && <span className={styles.error}>{errors.writers}</span>}
-              </div>
-
-              {/* Cast Search */}
-              <div className={styles.formGroup}>
-                <label htmlFor="cast" className={styles.label}>
-                  Cast
-                </label>
-                <input
-                  type="text"
-                  id="cast"
-                  value={formData.cast}
-                  onChange={(e) => handleInputChange('cast', e.target.value)}
-                  className={`${styles.input} ${errors.cast ? styles.inputError : ''}`}
-                  disabled={isLoading}
-                  placeholder="Actor names"
-                />
-                {errors.cast && <span className={styles.error}>{errors.cast}</span>}
-              </div>
-
-              {/* Limit */}
-              <div className={styles.formGroup}>
-                <label htmlFor="limit" className={styles.label}>
-                  Max Results
-                </label>
-                <input
-                  type="number"
-                  id="limit"
-                  value={formData.limit}
-                  onChange={(e) => handleInputChange('limit', e.target.value)}
-                  className={`${styles.input} ${errors.limit ? styles.inputError : ''}`}
-                  disabled={isLoading}
-                  min="1"
-                  max="100"
-                />
-                {errors.limit && <span className={styles.error}>{errors.limit}</span>}
+                <div className={styles.formGroup}>
+                  <label htmlFor="fullplot" className={styles.label}>
+                    Full Plot Keywords
+                  </label>
+                  <input
+                    type="text"
+                    id="fullplot"
+                    value={formData.fullplot}
+                    onChange={(e) => handleInputChange('fullplot', e.target.value)}
+                    className={`${styles.input} ${errors.fullplot ? styles.inputError : ''}`}
+                    disabled={isLoading}
+                    placeholder="Search in detailed plot descriptions"
+                  />
+                  {errors.fullplot && <span className={styles.error}>{errors.fullplot}</span>}
+                </div>
               </div>
             </div>
 
-            {/* Search Operator */}
-            <div className={styles.formGroup}>
-              <label htmlFor="searchOperator" className={styles.label}>
-                Search Logic
-              </label>
-              <select
-                id="searchOperator"
-                value={formData.searchOperator}
-                onChange={(e) => handleInputChange('searchOperator', e.target.value)}
-                className={styles.input}
-                disabled={isLoading}
-              >
-                {searchOperatorOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-              <small className={styles.searchOperatorDescription}>
-                {searchOperatorOptions.find(opt => opt.value === formData.searchOperator)?.description}
+            {/* People Search Section */}
+            <div className={styles.fieldSection}>
+              <h3 className={styles.sectionTitle}>People Search</h3>
+              <small className={styles.searchOperatorDescription} style={{ marginTop: '-0.5rem', marginBottom: '1rem', display: 'block' }}>
+                Fuzzy matching enabled – tolerates minor typos
               </small>
+              <div className={styles.formGridThreeCol}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="directors" className={styles.label}>
+                    Directors
+                  </label>
+                  <input
+                    type="text"
+                    id="directors"
+                    value={formData.directors}
+                    onChange={(e) => handleInputChange('directors', e.target.value)}
+                    className={`${styles.input} ${errors.directors ? styles.inputError : ''}`}
+                    disabled={isLoading}
+                    placeholder="e.g. James Cameron"
+                  />
+                  {errors.directors && <span className={styles.error}>{errors.directors}</span>}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="writers" className={styles.label}>
+                    Writers
+                  </label>
+                  <input
+                    type="text"
+                    id="writers"
+                    value={formData.writers}
+                    onChange={(e) => handleInputChange('writers', e.target.value)}
+                    className={`${styles.input} ${errors.writers ? styles.inputError : ''}`}
+                    disabled={isLoading}
+                    placeholder="e.g. Aaron Sorkin"
+                  />
+                  {errors.writers && <span className={styles.error}>{errors.writers}</span>}
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="cast" className={styles.label}>
+                    Cast
+                  </label>
+                  <input
+                    type="text"
+                    id="cast"
+                    value={formData.cast}
+                    onChange={(e) => handleInputChange('cast', e.target.value)}
+                    className={`${styles.input} ${errors.cast ? styles.inputError : ''}`}
+                    disabled={isLoading}
+                    placeholder="e.g. Tom Hanks"
+                  />
+                  {errors.cast && <span className={styles.error}>{errors.cast}</span>}
+                </div>
+              </div>
+            </div>
+
+            {/* Search Options Section */}
+            <div className={styles.fieldSection}>
+              <h3 className={styles.sectionTitle}>Search Options</h3>
+              <div className={styles.formGrid}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="searchOperator" className={styles.label}>
+                    Search Logic
+                  </label>
+                  <select
+                    id="searchOperator"
+                    value={formData.searchOperator}
+                    onChange={(e) => handleInputChange('searchOperator', e.target.value)}
+                    className={styles.input}
+                    disabled={isLoading}
+                  >
+                    {searchOperatorOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <small className={styles.searchOperatorDescription}>
+                    {searchOperatorOptions.find(opt => opt.value === formData.searchOperator)?.description}
+                  </small>
+                </div>
+
+                <div className={styles.formGroup}>
+                  <label htmlFor="limit" className={styles.label}>
+                    Max Results
+                  </label>
+                  <input
+                    type="number"
+                    id="limit"
+                    value={formData.limit}
+                    onChange={(e) => handleInputChange('limit', e.target.value)}
+                    className={`${styles.input} ${errors.limit ? styles.inputError : ''}`}
+                    disabled={isLoading}
+                    min="1"
+                    max="100"
+                  />
+                  {errors.limit && <span className={styles.error}>{errors.limit}</span>}
+                </div>
+              </div>
             </div>
           </>
         ) : (
           <>
             {/* Vector Search Fields */}
-            <div className={styles.formGroup}>
-              <label htmlFor="q" className={styles.label}>
-                Search Query
-              </label>
-              <textarea
-                id="q"
-                value={formData.q}
-                onChange={(e) => handleInputChange('q', e.target.value)}
-                className={`${styles.input} ${errors.q ? styles.inputError : ''}`}
-                disabled={isLoading}
-                placeholder="Describe the plot or theme you're looking for. e.g., 'A story about friendship and adventure in space'"
-                rows={3}
-              />
-              {errors.q && <span className={styles.error}>{errors.q}</span>}
-              <small className={styles.searchOperatorDescription}>
-                Describe the plot, theme, or mood you're looking for. MongoDB will find movies with similar content.
-              </small>
-            </div>
+            <div className={styles.fieldSection}>
+              <h3 className={styles.sectionTitle}>Semantic Search</h3>
+              <div className={styles.formGroup}>
+                <label htmlFor="q" className={styles.label}>
+                  Search Query
+                </label>
+                <textarea
+                  id="q"
+                  value={formData.q}
+                  onChange={(e) => handleInputChange('q', e.target.value)}
+                  className={`${styles.input} ${errors.q ? styles.inputError : ''}`}
+                  disabled={isLoading}
+                  placeholder="e.g. 'A story about friendship and adventure in space'"
+                  rows={3}
+                />
+                {errors.q && <span className={styles.error}>{errors.q}</span>}
+                <small className={styles.searchOperatorDescription}>
+                  Describe the plot, theme, or mood you're looking for. MongoDB will find movies with similar content.
+                </small>
+              </div>
 
-            {/* Limit for Vector Search */}
-            <div className={styles.formGroup}>
-              <label htmlFor="limit_vector" className={styles.label}>
-                Max Results
-              </label>
-              <input
-                type="number"
-                id="limit_vector"
-                value={formData.limit}
-                onChange={(e) => handleInputChange('limit', e.target.value)}
-                className={`${styles.input} ${errors.limit ? styles.inputError : ''}`}
-                disabled={isLoading}
-                min="1"
-                max="50"
-              />
-              {errors.limit && <span className={styles.error}>{errors.limit}</span>}
-              <small className={styles.searchOperatorDescription}>
-                Vector search supports up to 50 results
-              </small>
+              <div className={styles.formGroup} style={{ marginTop: '1rem', maxWidth: '200px' }}>
+                <label htmlFor="limit_vector" className={styles.label}>
+                  Max Results
+                </label>
+                <input
+                  type="number"
+                  id="limit_vector"
+                  value={formData.limit}
+                  onChange={(e) => handleInputChange('limit', e.target.value)}
+                  className={`${styles.input} ${errors.limit ? styles.inputError : ''}`}
+                  disabled={isLoading}
+                  min="1"
+                  max="50"
+                />
+                {errors.limit && <span className={styles.error}>{errors.limit}</span>}
+              </div>
             </div>
           </>
         )}

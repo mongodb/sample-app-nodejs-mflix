@@ -1,6 +1,6 @@
 import React from 'react';
-import { fetchMoviesWithComments, fetchMoviesByYear, fetchDirectorStats } from '../lib/api';
-import { MovieWithComments, YearlyStats, DirectorStats } from '../types/aggregations';
+import { fetchMoviesWithComments, fetchMoviesByYear, fetchDirectorStats } from '@/lib/api';
+import { MovieWithComments, YearlyStats, DirectorStats } from '@/types/aggregations';
 import styles from './aggregations.module.css';
 
 export default async function AggregationsPage() {

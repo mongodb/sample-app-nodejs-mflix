@@ -69,6 +69,11 @@ export default function MovieCard({ movie, isSelected = false, onSelectionChange
         {movie.year && (
           <p className={movieStyles.movieYear}>({movie.year})</p>
         )}
+        {movie.score !== undefined && (
+          <p className={movieStyles.vectorScore}>
+            🎯 Vector Score: {movie.score.toFixed(4)}
+          </p>
+        )}
         {movie.imdb?.rating && (
           <p className={movieStyles.movieRating}>⭐ {movie.imdb.rating}/10</p>
         )}

@@ -29,7 +29,10 @@ async function _connectToDatabase(): Promise<Db> {
 
   try {
     // Create new MongoDB client instance
-    client = new MongoClient(uri);
+    client = new MongoClient(uri, {
+      // Set application name
+      appName: "sample-app-node-mflix",
+    });
 
     // Connect to MongoDB
     await client.connect();

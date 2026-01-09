@@ -578,32 +578,72 @@ export async function searchMovies(req: Request, res: Response): Promise<void> {
     });
   }
 
+  // Use compound operator with "should" clauses to create a scoring hierarchy:
+  // 1. phrase match (highest score) - exact phrase in same array element
+  // 2. text match without fuzzy (high score) - all terms present, exact spelling
+  // 3. text match with fuzzy (lower score) - typo-tolerant fallback; update fuzzy settings as needed
+  // For more details, see: https://www.mongodb.com/docs/atlas/atlas-search/operators-collectors/text/
   if (directors) {
     searchPhrases.push({
-      text: {
-        query: directors,
-        path: "directors",
-        fuzzy: { maxEdits: 1, prefixLength: 5 },
+      compound: {
+        should: [
+          // Highest score: exact phrase match
+          { phrase: { query: directors, path: "directors" } },
+          // High score: exact text match (all terms, no fuzzy)
+          { text: { query: directors, path: "directors", matchCriteria: "all" } },
+          // Lower score: fuzzy match (typo tolerance)
+          {
+            text: {
+              query: directors,
+              path: "directors",
+              matchCriteria: "all",
+              fuzzy: { maxEdits: 1, prefixLength: 2 }, // Allow up to 1 edit, require first 2 characters to match
+            },
+          },
+        ],
+        minimumShouldMatch: 1,
       },
     });
   }
 
   if (writers) {
+    // See comments above regarding compound scoring hierarchy.
     searchPhrases.push({
-      text: {
-        query: writers,
-        path: "writers",
-        fuzzy: { maxEdits: 1, prefixLength: 5 },
+      compound: {
+        should: [
+          { phrase: { query: writers, path: "writers" } },
+          { text: { query: writers, path: "writers", matchCriteria: "all" } },
+          {
+            text: {
+              query: writers,
+              path: "writers",
+              matchCriteria: "all",
+              fuzzy: { maxEdits: 1, prefixLength: 2 },
+            },
+          },
+        ],
+        minimumShouldMatch: 1,
       },
     });
   }
 
   if (cast) {
+    // See comments above regarding compound scoring hierarchy.
     searchPhrases.push({
-      text: {
-        query: cast,
-        path: "cast",
-        fuzzy: { maxEdits: 1, prefixLength: 5 },
+      compound: {
+        should: [
+          { phrase: { query: cast, path: "cast" } },
+          { text: { query: cast, path: "cast", matchCriteria: "all" } },
+          {
+            text: {
+              query: cast,
+              path: "cast",
+              matchCriteria: "all",
+              fuzzy: { maxEdits: 1, prefixLength: 2 },
+            },
+          },
+        ],
+        minimumShouldMatch: 1,
       },
     });
   }
@@ -835,6 +875,36 @@ export async function vectorSearchMovies(req: Request, res: Response): Promise<v
     );
   } catch (error) {
     console.error("Vector search error:", error);
+
+    // Handle Voyage AI authentication errors
+    if (error instanceof VoyageAuthError) {
+      res
+        .status(401)
+        .json(
+          createErrorResponse(
+            error.message,
+            "VOYAGE_AUTH_ERROR",
+            "Please verify your VOYAGE_API_KEY is correct in the .env file"
+          )
+        );
+      return;
+    }
+
+    // Handle other Voyage AI API errors
+    if (error instanceof VoyageAPIError) {
+      res
+        .status(503)
+        .json(
+          createErrorResponse(
+            "Vector search service unavailable",
+            "VOYAGE_API_ERROR",
+            error.message
+          )
+        );
+      return;
+    }
+
+    // Handle generic errors
     res
       .status(500)
       .json(
@@ -1161,15 +1231,40 @@ export async function getDirectorsWithMostMovies(
 }
 
 /**
+ * Custom error class for Voyage AI API authentication errors
+ */
+class VoyageAuthError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "VoyageAuthError";
+  }
+}
+
+/**
+ * Custom error class for Voyage AI API errors
+ */
+class VoyageAPIError extends Error {
+  public statusCode: number;
+
+  constructor(message: string, statusCode: number) {
+    super(message);
+    this.name = "VoyageAPIError";
+    this.statusCode = statusCode;
+  }
+}
+
+/**
  * Generates a vector embedding using the Voyage AI REST API.
- * 
+ *
  * This function calls the Voyage AI API directly to generate embeddings with 2048 dimensions.
  * The voyage-3-large model supports multiple dimensions (256, 512, 1024, 2048), and we explicitly
  * request 2048 to match the vector search index configuration.
- * 
+ *
  * @param text The text to generate an embedding for
  * @param apiKey The Voyage AI API key
  * @returns Promise<number[]> representing the embedding vector
+ * @throws VoyageAuthError if the API key is invalid (401)
+ * @throws VoyageAPIError for other API errors
  */
 async function generateVoyageEmbedding(text: string, apiKey: string): Promise<number[]> {
   // Build the request body with output_dimension set to 2048
@@ -1192,21 +1287,36 @@ async function generateVoyageEmbedding(text: string, apiKey: string): Promise<nu
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`Voyage AI API returned status ${response.status}: ${errorText}`);
+
+      // Handle authentication errors specifically
+      if (response.status === 401) {
+        throw new VoyageAuthError("Invalid Voyage AI API key. Please check your VOYAGE_API_KEY in the .env file");
+      }
+
+      throw new VoyageAPIError(
+        `Voyage AI API returned status ${response.status}: ${errorText}`,
+        response.status
+      );
     }
 
     const data = await response.json() as VoyageAIResponse;
-    
+
     // Extract the embedding from the response
     if (!data.data || !data.data[0] || !data.data[0].embedding) {
-      throw new Error("Invalid response format from Voyage AI API");
+      throw new VoyageAPIError("Invalid response format from Voyage AI API", 500);
     }
 
     return data.data[0].embedding;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(`Failed to generate embedding: ${error.message}`);
+    // Re-throw our custom errors
+    if (error instanceof VoyageAuthError || error instanceof VoyageAPIError) {
+      throw error;
     }
-    throw new Error("Failed to generate embedding: Unknown error");
+
+    // Wrap other errors
+    if (error instanceof Error) {
+      throw new VoyageAPIError(`Failed to generate embedding: ${error.message}`, 500);
+    }
+    throw new VoyageAPIError("Failed to generate embedding: Unknown error", 500);
   }
 }

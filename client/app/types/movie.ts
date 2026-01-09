@@ -5,7 +5,7 @@
 
 /**
  * Movie interface for type safety
- * Matches the Movie type from the Express backend
+ * Matches the Movie type from the backend
  */
 export interface Movie {
   _id: string;
@@ -51,11 +51,13 @@ export interface Movie {
   };
   metacritic?: number;
   type?: string;
+  // Vector search score (only present in vector search results)
+  score?: number;
 }
 
 /**
  * API Response interface for the movies endpoint
- * Matches the SuccessResponse type from the Express backend
+ * Matches the SuccessResponse type from the backend
  */
 export interface MoviesApiResponse {
   success: boolean;

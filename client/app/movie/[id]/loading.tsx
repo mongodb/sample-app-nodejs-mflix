@@ -1,5 +1,5 @@
 import pageStyles from './page.module.css';
-import { MovieDetailsSkeleton } from '../../components/LoadingSkeleton';
+import { MovieDetailsSkeleton } from '@/components';
 
 export default function MovieDetailsLoading() {
   return (

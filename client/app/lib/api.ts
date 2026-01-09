@@ -680,16 +680,36 @@ export async function vectorSearchMovies(searchParams: {
     const result = await response.json();
 
     if (!response.ok) {
-      return { 
-        success: false, 
-        error: result.error || `Failed to perform vector search: ${response.status}` 
+      // Extract error message from the standardized error response
+      const errorMessage = result.message || result.error?.message || `Failed to perform vector search: ${response.status}`;
+      const errorCode = result.error?.code;
+
+      // Provide user-friendly messages for specific error codes
+      if (errorCode === 'VOYAGE_AUTH_ERROR') {
+        return {
+          success: false,
+          error: 'Vector search unavailable: Your Voyage AI API key is missing or invalid. Please add a valid VOYAGE_API_KEY to your .env file and restart the server.'
+        };
+      }
+
+      if (errorCode === 'SERVICE_UNAVAILABLE' || errorCode === 'VOYAGE_API_ERROR') {
+        return {
+          success: false,
+          error: errorMessage || 'Vector search service is currently unavailable. Please try again later.'
+        };
+      }
+
+      return {
+        success: false,
+        error: errorMessage
       };
     }
 
     if (!result.success) {
-      return { 
-        success: false, 
-        error: result.error || 'API returned error response' 
+      const errorMessage = result.message || result.error?.message || 'API returned error response';
+      return {
+        success: false,
+        error: errorMessage
       };
     }
 
@@ -705,6 +725,7 @@ export async function vectorSearchMovies(searchParams: {
         genres: item.genres || [],
         directors: item.directors || [],
         cast: item.cast || [],
+        score: item.score,
         // Add default values for fields not included in VectorSearchResult
         fullplot: undefined,
         released: undefined,
