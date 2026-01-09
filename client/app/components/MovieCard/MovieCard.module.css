@@ -105,6 +105,17 @@
   font-size: 14px;
 }
 
+.vectorScore {
+  margin: 0 0 4px 0;
+  color: #0066cc;
+  font-size: 13px;
+  font-weight: 500;
+  background: #e6f0ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
 .movieGenres {
   margin: 0;
   color: #888;

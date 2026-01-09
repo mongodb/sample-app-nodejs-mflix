@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { ROUTES } from '../../lib/constants';
+import { ROUTES } from '@/lib/constants';
 import styles from './error.module.css';
 
 export default function MovieDetailsError({

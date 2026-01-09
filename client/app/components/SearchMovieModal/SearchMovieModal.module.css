@@ -1,45 +1,47 @@
 /**
  * Search Movie Modal Styles
- * 
+ *
  * CSS Module for the search movie modal component.
  * Provides consistent styling with the rest of the application.
  */
 
 .formContainer {
   background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .formTitle {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: #333;
-  margin: 0 0 1.5rem 0;
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 0.5rem 0;
   text-align: center;
 }
 
 .batchDescription {
-  background-color: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-  color: #495057;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin-bottom: 2rem;
+  color: #6b7280;
+  font-size: 1rem;
+  line-height: 1.5;
   text-align: center;
 }
 
 .generalError {
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.875rem 1.25rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
   font-size: 0.9rem;
   text-align: center;
 }
@@ -48,138 +50,183 @@
   width: 100%;
 }
 
+/* Section styling for grouped fields */
+.fieldSection {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.sectionTitle {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
 .formGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
   margin-bottom: 1.5rem;
+}
+
+.formGridThreeCol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.375rem;
+}
+
+.formGroupFullWidth {
+  grid-column: 1 / -1;
 }
 
 .label {
-  font-weight: 500;
-  color: #333;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
 }
 
 .input,
 .textarea {
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
   background: white;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: #9ca3af;
+}
+
+.input:hover:not(:disabled),
+.textarea:hover:not(:disabled) {
+  border-color: #cbd5e1;
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: #0070f3;
-  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  background: white;
 }
 
 .input:disabled,
 .textarea:disabled {
-  background: #f8f9fa;
-  color: #6c757d;
+  background: #f1f5f9;
+  color: #94a3b8;
   cursor: not-allowed;
 }
 
 .inputError {
-  border-color: #dc2626 !important;
+  border-color: #ef4444 !important;
 }
 
 .inputError:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
 }
 
 .error {
-  color: #dc2626;
-  font-size: 0.875rem;
+  color: #ef4444;
+  font-size: 0.8rem;
   margin-top: 0.25rem;
 }
 
 .searchOperatorDescription {
-  color: #6c757d;
-  font-size: 0.875rem;
+  color: #64748b;
+  font-size: 0.8rem;
   margin-top: 0.25rem;
   display: block;
+  line-height: 1.4;
 }
 
 .formActions {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   justify-content: flex-end;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e1e5e9;
+  padding-top: 1.75rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid #e2e8f0;
 }
 
 .button {
   padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 120px;
+  min-width: 100px;
 }
 
 .button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
 .saveButton {
-  background: #0070f3;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
-  border: 1px solid #0070f3;
+  border: none;
+  min-width: 140px;
 }
 
 .saveButton:hover:not(:disabled) {
-  background: #0051cc;
-  border-color: #0051cc;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 112, 243, 0.3);
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
 }
 
 .cancelButton {
-  background: #6c757d;
-  color: white;
-  border: 1px solid #6c757d;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1.5px solid #e2e8f0;
 }
 
 .cancelButton:hover:not(:disabled) {
-  background: #5a6268;
-  border-color: #5a6268;
+  background: #e2e8f0;
+  border-color: #cbd5e1;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
 }
 
 .clearButton {
-  background: #6c757d;
-  color: white;
-  border: 1px solid #6c757d;
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
 }
 
 .clearButton:hover:not(:disabled) {
-  background: #5a6268;
-  border-color: #5a6268;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .formContainer {
-    padding: 1.5rem;
+    padding: 1.75rem;
+    border-radius: 12px;
+  }
+
+  .fieldSection {
+    padding: 1.25rem;
   }
 
   .formGrid {
@@ -187,32 +234,43 @@
     gap: 1rem;
   }
 
+  .formGridThreeCol {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
   .formActions {
     flex-direction: column-reverse;
-    gap: 0.75rem;
+    gap: 0.625rem;
   }
 
   .button {
     width: 100%;
+    padding: 0.875rem 1.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .formContainer {
-    padding: 1rem;
+    padding: 1.25rem;
   }
 
   .formTitle {
     font-size: 1.5rem;
   }
 
-  .formGrid {
-    gap: 0.75rem;
+  .fieldSection {
+    padding: 1rem;
+  }
+
+  .formGrid,
+  .formGridThreeCol {
+    gap: 0.875rem;
   }
 
   .input,
   .textarea {
-    padding: 0.625rem;
+    padding: 0.75rem;
     font-size: 0.9rem;
   }
 

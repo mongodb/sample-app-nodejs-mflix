@@ -880,7 +880,7 @@ describe("Movie Controller Tests", () => {
       );
     });
 
-    it("should handle Voyage AI API errors", async () => {
+    it("should handle Voyage AI authentication errors with 401 status", async () => {
       mockFetch.mockResolvedValueOnce({
         ok: false,
         status: 401,
@@ -891,11 +891,30 @@ describe("Movie Controller Tests", () => {
 
       await vectorSearchMovies(mockRequest as Request, mockResponse as Response);
 
-      expect(mockStatus).toHaveBeenCalledWith(500);
+      expect(mockStatus).toHaveBeenCalledWith(401);
       expect(mockCreateErrorResponse).toHaveBeenCalledWith(
-        "Error performing vector search",
-        "VECTOR_SEARCH_ERROR",
-        expect.stringContaining("Voyage AI API returned status 401")
+        "Invalid Voyage AI API key. Please check your VOYAGE_API_KEY in the .env file",
+        "VOYAGE_AUTH_ERROR",
+        "Please verify your VOYAGE_API_KEY is correct in the .env file"
+      );
+    });
+
+    it("should handle other Voyage AI API errors with 503 status", async () => {
+      mockFetch.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        text: () => Promise.resolve("Internal Server Error"),
+      } as any);
+
+      mockRequest.query = { q: "test" };
+
+      await vectorSearchMovies(mockRequest as Request, mockResponse as Response);
+
+      expect(mockStatus).toHaveBeenCalledWith(503);
+      expect(mockCreateErrorResponse).toHaveBeenCalledWith(
+        "Vector search service unavailable",
+        "VOYAGE_API_ERROR",
+        expect.stringContaining("Voyage AI API returned status 500")
       );
     });
 
