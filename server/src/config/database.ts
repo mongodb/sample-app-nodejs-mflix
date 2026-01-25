@@ -7,6 +7,7 @@
  */
 
 import { MongoClient, Db, Collection, Document } from "mongodb";
+import logger from "../utils/logger";
 
 let client: MongoClient;
 let database: Db;
@@ -40,7 +41,7 @@ async function _connectToDatabase(): Promise<Db> {
     // Get reference to the sample_mflix database
     database = client.db("sample_mflix");
 
-    console.log(`Connected to database: ${database.databaseName}`);
+    logger.debug(`Connected to database: ${database.databaseName}`);
 
     return database;
   } catch (error) {
@@ -85,7 +86,7 @@ export function getCollection<T extends Document>(
 export async function closeDatabaseConnection(): Promise<void> {
   if (client) {
     await client.close();
-    console.log("Database connection closed");
+    logger.info("Database connection closed");
   }
 }
 
@@ -100,9 +101,9 @@ export async function verifyRequirements(): Promise<void> {
 
     // Check if the movies collection exists and has data
     await verifyMoviesCollection(db);
-    console.log("All database requirements verified successfully");
+    logger.debug("All database requirements verified successfully");
   } catch (error) {
-    console.error("Requirements verification failed:", error);
+    logger.error("Requirements verification failed:", error);
     throw error;
   }
 }
@@ -117,22 +118,51 @@ async function verifyMoviesCollection(db: Db): Promise<void> {
   const movieCount = await moviesCollection.estimatedDocumentCount();
 
   if (movieCount === 0) {
-    console.warn(
+    logger.warn(
       "Movies collection is empty. Please ensure sample_mflix data is loaded."
     );
   }
 
   // Create text search index on plot field for full-text search
+  await createTextSearchIndex(moviesCollection);
+}
+
+/**
+ * Creates a text search index on the movies collection if it doesn't already exist.
+ *
+ * MongoDB only allows one text index per collection, so we check for any existing
+ * text index before attempting to create one.
+ */
+async function createTextSearchIndex(moviesCollection: Collection<Document>): Promise<void> {
+  const TEXT_INDEX_NAME = "text_search_index";
+
   try {
+    // Check if any text index already exists
+    const existingIndexes = await moviesCollection.listIndexes().toArray();
+    const textIndexExists = existingIndexes.some(
+      (index) => index.key && index.key._fts === "text"
+    );
+
+    if (textIndexExists) {
+      const existingTextIndex = existingIndexes.find(
+        (index) => index.key && index.key._fts === "text"
+      );
+      logger.debug(`Text search index '${existingTextIndex?.name}' already exists on movies collection`);
+      return;
+    }
+
+    // Create the text index
     await moviesCollection.createIndex(
       { plot: "text", title: "text", fullplot: "text" },
       {
-        name: "text_search_index",
+        name: TEXT_INDEX_NAME,
         background: true,
       }
     );
-    console.log("Text search index created for movies collection");
+    logger.info(`Text search index '${TEXT_INDEX_NAME}' created successfully for movies collection`);
   } catch (error) {
-    console.error("Could not create text search index:", error);
+    // Log as warning, not error - the application can still function without the index
+    logger.warn("Could not create text search index:", error);
+    logger.warn("Text search functionality may not work without the index");
   }
 }

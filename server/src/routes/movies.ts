@@ -120,6 +120,31 @@ router.get("/", asyncHandler(movieController.getAllMovies));
 
 /**
  * @swagger
+ * /api/movies/genres:
+ *   get:
+ *     summary: Get all distinct genres
+ *     description: Retrieves all unique genres from the movies collection. Demonstrates the MongoDB distinct() operation.
+ *     tags: [Movies]
+ *     responses:
+ *       200:
+ *         description: List of distinct genres
+ *         content:
+ *           application/json:
+ *             schema:
+ *               allOf:
+ *                 - $ref: '#/components/schemas/SuccessResponse'
+ *                 - type: object
+ *                   properties:
+ *                     data:
+ *                       type: array
+ *                       items:
+ *                         type: string
+ *                       example: ["Action", "Adventure", "Animation", "Comedy", "Drama"]
+ */
+router.get("/genres", asyncHandler(movieController.getDistinctGenres));
+
+/**
+ * @swagger
  * /api/movies/search:
  *   get:
  *     summary: Search movies using MongoDB Search

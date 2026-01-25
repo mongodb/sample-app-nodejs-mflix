@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { fetchMovieById, updateMovie, deleteMovie } from '../../lib/api';
+import { fetchMovieById, updateMovie, deleteMovie } from '@/lib/api';
 import { ActionButtons, EditMovieForm } from '../../components';
 import { ErrorDisplay, LoadingSpinner } from '../../components/ui';
-import { Movie } from '../../types/movie';
-import { ROUTES } from '../../lib/constants';
+import { Movie } from '@/types/movie';
+import { ROUTES } from '@/lib/constants';
 import pageStyles from './page.module.css';
 
 interface MovieDetailsPageProps {
@@ -205,7 +205,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsPageProps) {
               {movie.poster ? (
                 <div className={pageStyles.posterContainer}>
                   <Image
-                    src={movie.poster}
+                    src={movie.poster!}
                     alt={`${movie.title} poster`}
                     fill
                     sizes="(max-width: 768px) 100vw, 400px"

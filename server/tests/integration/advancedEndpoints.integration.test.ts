@@ -455,6 +455,53 @@ describeSearch("MongoDB Search Integration Tests", () => {
       expect(response.body.error).toBeDefined();
     });
   });
+
+  describe("GET /api/movies/genres", () => {
+    test("should return list of distinct genres", async () => {
+      const response = await request(app)
+        .get("/api/movies/genres")
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      expect(response.body.data).toBeDefined();
+      expect(Array.isArray(response.body.data)).toBe(true);
+      expect(response.body.data.length).toBeGreaterThan(0);
+
+      // Verify genres are strings
+      response.body.data.forEach((genre: any) => {
+        expect(typeof genre).toBe("string");
+        expect(genre.length).toBeGreaterThan(0);
+      });
+    });
+
+    test("should return genres sorted alphabetically", async () => {
+      const response = await request(app)
+        .get("/api/movies/genres")
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      const genres = response.body.data;
+
+      // Verify alphabetical sorting
+      for (let i = 0; i < genres.length - 1; i++) {
+        expect(genres[i].localeCompare(genres[i + 1])).toBeLessThanOrEqual(0);
+      }
+    });
+
+    test("should include common genres like Action, Drama, Comedy", async () => {
+      const response = await request(app)
+        .get("/api/movies/genres")
+        .expect(200);
+
+      expect(response.body.success).toBe(true);
+      const genres = response.body.data;
+
+      // The sample_mflix dataset should contain these common genres
+      expect(genres).toContain("Action");
+      expect(genres).toContain("Drama");
+      expect(genres).toContain("Comedy");
+    });
+  });
 });
 
 

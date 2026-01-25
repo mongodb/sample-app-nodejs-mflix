@@ -18,6 +18,8 @@ import {
 import { errorHandler } from "./utils/errorHandler";
 import moviesRouter from "./routes/movies";
 import { swaggerSpec } from "./config/swagger";
+import logger from "./utils/logger";
+import { requestLogger } from "./middleware/requestLogger";
 
 // Load environment variables from .env file
 // This must be called before any other imports that use environment variables
@@ -45,6 +47,12 @@ app.use(
  */
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+/**
+ * Request Logging Middleware
+ * Logs all incoming HTTP requests with method, URL, status code, and response time
+ */
+app.use(requestLogger);
 
 /**
  * Swagger API Documentation
@@ -119,25 +127,25 @@ app.use(errorHandler);
  */
 async function startServer() {
   try {
-    console.log("Starting MongoDB Sample MFlix API...");
+    logger.info("Starting MongoDB Sample MFlix API...");
 
     // Connect to MongoDB database
-    console.log("Connecting to MongoDB...");
+    logger.info("Connecting to MongoDB...");
     await connectToDatabase();
-    console.log("Connected to MongoDB successfully");
+    logger.info("Connected to MongoDB successfully");
 
     // Verify that all required indexes and sample data exist
-    console.log("Verifying requirements (indexes and sample data)...");
+    logger.info("Verifying requirements (indexes and sample data)...");
     await verifyRequirements();
-    console.log("All requirements verified successfully");
+    logger.info("All requirements verified successfully");
 
     // Start the Express server
     app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`API documentation available at http://localhost:${PORT}/api-docs`);
+      logger.info(`Server running on port ${PORT}`);
+      logger.info(`API documentation available at http://localhost:${PORT}/api-docs`);
     });
   } catch (error) {
-    console.error("Failed to start server:", error);
+    logger.error("Failed to start server:", error);
 
     // Exit the process if we can't start properly
     // This ensures the application doesn't run in a broken state
@@ -150,13 +158,13 @@ async function startServer() {
  * Ensures the application shuts down cleanly when terminated
  */
 process.on("SIGINT", () => {
-  console.log("\nReceived SIGINT. Shutting down...");
+  logger.info("Received SIGINT. Shutting down gracefully...");
   closeDatabaseConnection();
   process.exit(0);
 });
 
 process.on("SIGTERM", () => {
-  console.log("\nReceived SIGTERM. Shutting down...");
+  logger.info("Received SIGTERM. Shutting down gracefully...");
   closeDatabaseConnection();
   process.exit(0);
 });

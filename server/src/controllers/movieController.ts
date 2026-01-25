@@ -24,6 +24,7 @@ import {
   createSuccessResponse,
   validateRequiredFields,
 } from "../utils/errorHandler";
+import logger from "../utils/logger";
 import {
   CreateMovieRequest,
   UpdateMovieRequest,
@@ -132,6 +133,34 @@ export async function getAllMovies(req: Request, res: Response): Promise<void> {
 
   // Return successful response
   res.json(createSuccessResponse(movies, `Found ${movies.length} movies`));
+}
+
+/**
+ * GET /api/movies/genres
+ *
+ * Retrieves all unique genres from the movies collection.
+ * Demonstrates the distinct() operation.
+ *
+ * Returns an array of unique genre strings, sorted alphabetically.
+ */
+export async function getDistinctGenres(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const moviesCollection = getCollection("movies");
+
+  // Use distinct() to get all unique values from the genres array field
+  // MongoDB automatically flattens array fields when using distinct()
+  const genres = await moviesCollection.distinct("genres");
+
+  // Filter out null/empty values and sort alphabetically
+  const validGenres = genres
+    .filter((genre): genre is string => typeof genre === "string" && genre.length > 0)
+    .sort((a, b) => a.localeCompare(b));
+
+  res.json(
+    createSuccessResponse(validGenres, `Found ${validGenres.length} distinct genres`)
+  );
 }
 
 /**
@@ -874,7 +903,7 @@ export async function vectorSearchMovies(req: Request, res: Response): Promise<v
       )
     );
   } catch (error) {
-    console.error("Vector search error:", error);
+    logger.error("Vector search error:", error);
 
     // Handle Voyage AI authentication errors
     if (error instanceof VoyageAuthError) {
