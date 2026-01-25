@@ -3,12 +3,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import movieStyles from "./MovieCard.module.css";
-import { Movie } from "../../types/movie";
-import { ROUTES } from "../../lib/constants";
+import { Movie } from "@/types/movie";
+import { ROUTES } from "@/lib/constants";
+import React from "react";
 
 /**
  * Movie Card Client Component
- * 
+ *
  * This component handles the interactive parts of the movie card,
  * such as image error handling and selection checkbox.
  */

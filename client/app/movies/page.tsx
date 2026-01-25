@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import pageStyles from "./page.module.css";
 import movieStyles from "./movies.module.css";
-import { MovieCard, Pagination, PageSizeSelector, AddMovieForm, BatchEditMovieForm, SearchMovieModal } from "../components";
+import { MovieCard, Pagination, PageSizeSelector, AddMovieForm, BatchEditMovieForm, SearchMovieModal, FilterBar } from "../components";
 import { ErrorDisplay, LoadingSpinner } from "../components/ui";
-import { fetchMovies, createMovie, createMoviesBatch, deleteMoviesBatch, updateMoviesBatch, searchMovies, vectorSearchMovies } from "../lib/api";
-import { Movie } from "../types/movie";
-import { APP_CONFIG, ROUTES } from "../lib/constants";
-import type { SearchParams } from "../components/SearchMovieModal";
+import { fetchMovies, createMovie, createMoviesBatch, deleteMoviesBatch, updateMoviesBatch, searchMovies, vectorSearchMovies, MovieFilterParams } from "../lib/api";
+import { Movie } from "@/types/movie";
+import { APP_CONFIG, ROUTES } from "@/lib/constants";
+import type { SearchParams } from "@/components/SearchMovieModal";
 
 /**
  * Movies Page Component
@@ -52,20 +52,65 @@ export default function Movies() {
   const [searchPage, setSearchPage] = useState(1);
   const [searchLimit, setSearchLimit] = useState(20);
   const [currentSearchParams, setCurrentSearchParams] = useState<SearchParams | null>(null);
-  
+
+  // Parse filter parameters from URL for persistence
+  const parseFiltersFromUrl = (): MovieFilterParams => {
+    const filters: MovieFilterParams = {};
+
+    const genre = searchParams.get('genre');
+    const year = searchParams.get('year');
+    const minRating = searchParams.get('minRating');
+    const maxRating = searchParams.get('maxRating');
+    const sortBy = searchParams.get('sortBy');
+    const sortOrder = searchParams.get('sortOrder');
+
+    if (genre) filters.genre = genre;
+    if (year) filters.year = parseInt(year);
+    if (minRating) filters.minRating = parseFloat(minRating);
+    if (maxRating) filters.maxRating = parseFloat(maxRating);
+    if (sortBy && ['title', 'year', 'imdb.rating'].includes(sortBy)) {
+      filters.sortBy = sortBy as MovieFilterParams['sortBy'];
+    }
+    if (sortOrder && ['asc', 'desc'].includes(sortOrder)) {
+      filters.sortOrder = sortOrder as 'asc' | 'desc';
+    }
+
+    return filters;
+  };
+
+  // Build URL with filter parameters
+  const buildUrlWithFilters = (newPage: number, newLimit: number, filters: MovieFilterParams): string => {
+    const params = new URLSearchParams();
+    params.set('page', newPage.toString());
+    params.set('limit', newLimit.toString());
+
+    if (filters.genre) params.set('genre', filters.genre);
+    if (filters.year !== undefined) params.set('year', filters.year.toString());
+    if (filters.minRating !== undefined) params.set('minRating', filters.minRating.toString());
+    if (filters.maxRating !== undefined) params.set('maxRating', filters.maxRating.toString());
+    if (filters.sortBy) params.set('sortBy', filters.sortBy);
+    if (filters.sortOrder) params.set('sortOrder', filters.sortOrder);
+
+    return `${ROUTES.movies}?${params.toString()}`;
+  };
+
+  // Get filters from URL on initial load and when URL changes
+  const urlFilters = parseFiltersFromUrl();
+  const hasUrlFilters = Object.keys(urlFilters).length > 0;
+
   const page = parseInt(searchParams.get('page') || '1');
   const limit = Math.min(
-    parseInt(searchParams.get('limit') || APP_CONFIG.defaultMovieLimit.toString()), 
+    parseInt(searchParams.get('limit') || APP_CONFIG.defaultMovieLimit.toString()),
     APP_CONFIG.maxMovieLimit
   );
   const skip = (page - 1) * limit;
 
-  const loadMovies = async () => {
+  const loadMovies = async (filters?: MovieFilterParams) => {
     setIsLoading(true);
     setError(null);
-    
+
     try {
-      const result = await fetchMovies(limit, skip);
+      const result = await fetchMovies(limit, skip, filters);
       setMovies(result.movies);
       setHasNextPage(result.hasNextPage);
       setHasPrevPage(result.hasPrevPage);
@@ -73,13 +118,23 @@ export default function Movies() {
       setError('Failed to load movies. Make sure the server is running on port 3001.');
       setMovies([]);
     }
-    
+
     setIsLoading(false);
   };
 
   useEffect(() => {
-    loadMovies();
-  }, [page, limit]);
+    // Load movies with filters from URL when page/limit/filters change
+    loadMovies(hasUrlFilters ? urlFilters : undefined);
+  }, [searchParams]); // Re-run when any URL param changes
+
+  // Handler for filter changes from FilterBar - updates URL
+  const handleFilterChange = (filters: MovieFilterParams) => {
+    const hasFilters = Object.keys(filters).length > 0;
+
+    // Always reset to page 1 when filters change and update URL
+    const newUrl = buildUrlWithFilters(1, limit, filters);
+    router.push(newUrl);
+  };
 
   const handleAddMovie = () => {
     setShowAddForm(true);
@@ -462,7 +517,7 @@ export default function Movies() {
       <main className={pageStyles.main}>
         <div className={movieStyles.pageHeader}>
           <h1 className={movieStyles.pageTitle}>
-            {isSearchMode ? `Search Results` : 'Movies'}
+            {isSearchMode ? `Search Results` : hasUrlFilters ? 'Filtered Movies' : 'Movies'}
           </h1>
           
           <div className={movieStyles.headerActions}>
@@ -572,20 +627,31 @@ export default function Movies() {
 
         {/* Page Size Selector - only show for regular mode */}
         {!showAddForm && !showBatchEditForm && !showSearchModal && !isSearchMode && <PageSizeSelector currentLimit={limit} />}
-        
+
+        {/* Filter Bar - display when not in search mode and not showing forms */}
+        {!showAddForm && !showBatchEditForm && !showSearchModal && !isSearchMode && (
+          <FilterBar
+            onFilterChange={handleFilterChange}
+            isLoading={isLoading}
+            initialFilters={urlFilters}
+          />
+        )}
+
         {/* Movies Content */}
         {!showAddForm && !showBatchEditForm && !showSearchModal && (
           <>
             {error && displayMovies.length === 0 ? (
-              <ErrorDisplay 
-                message={error} 
-                onRetry={isSearchMode ? () => handleSearchSubmit(currentSearchParams!) : loadMovies}
+              <ErrorDisplay
+                message={error}
+                onRetry={isSearchMode ? () => handleSearchSubmit(currentSearchParams!) : () => loadMovies(hasUrlFilters ? urlFilters : undefined)}
               />
             ) : displayMovies.length === 0 ? (
               <div className={movieStyles.noMovies}>
                 <p>
-                  {isSearchMode 
+                  {isSearchMode
                     ? 'No movies found matching your search criteria. Try different search terms.'
+                    : hasUrlFilters
+                    ? 'No movies found matching your filter criteria. Try adjusting your filters.'
                     : 'No movies found. Make sure the server is running on port 3001.'
                   }
                 </p>
