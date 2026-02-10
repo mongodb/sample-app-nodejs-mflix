@@ -182,40 +182,40 @@
 }
 
 .saveButton {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: white;
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
   border: none;
   min-width: 140px;
 }
 
 .saveButton:hover:not(:disabled) {
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  background: var(--mongodb-evergreen);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 6px 16px rgba(0, 104, 74, 0.4);
 }
 
 .cancelButton {
-  background: #f1f5f9;
-  color: #475569;
-  border: 1.5px solid #e2e8f0;
+  background: var(--mongodb-white);
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
 }
 
 .cancelButton:hover:not(:disabled) {
-  background: #e2e8f0;
-  border-color: #cbd5e1;
+  background: var(--color-border);
+  border-color: var(--color-text-secondary);
   transform: translateY(-1px);
 }
 
 .clearButton {
   background: transparent;
-  color: #64748b;
-  border: 1.5px solid #e2e8f0;
+  color: var(--color-text-secondary);
+  border: 1.5px solid var(--color-border);
 }
 
 .clearButton:hover:not(:disabled) {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-  color: #475569;
+  background: var(--mongodb-mint);
+  border-color: var(--mongodb-forest);
+  color: var(--mongodb-forest);
 }
 
 /* Responsive Design */

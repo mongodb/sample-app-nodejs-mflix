@@ -172,8 +172,8 @@ export async function getDistinctGenres(
 export async function getMovieById(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
 
-  // Validate ObjectId format
-  if (!ObjectId.isValid(id)) {
+  // Validate id is a string and ObjectId format
+  if (typeof id !== "string" || !ObjectId.isValid(id)) {
     res
       .status(400)
       .json(
@@ -305,8 +305,8 @@ export async function updateMovie(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
   const updateData: UpdateMovieRequest = req.body;
 
-  // Validate ObjectId format
-  if (!ObjectId.isValid(id)) {
+  // Validate id is a string and ObjectId format
+  if (typeof id !== "string" || !ObjectId.isValid(id)) {
     res
       .status(400)
       .json(
@@ -426,8 +426,8 @@ export async function updateMoviesBatch(
 export async function deleteMovie(req: Request, res: Response): Promise<void> {
   const { id } = req.params;
 
-  // Validate ObjectId format
-  if (!ObjectId.isValid(id)) {
+  // Validate id is a string and ObjectId format
+  if (typeof id !== "string" || !ObjectId.isValid(id)) {
     res
       .status(400)
       .json(
@@ -521,8 +521,8 @@ export async function findAndDeleteMovie(
 ): Promise<void> {
   const { id } = req.params;
 
-  // Validate ObjectId format
-  if (!ObjectId.isValid(id)) {
+  // Validate id is a string and ObjectId format
+  if (typeof id !== "string" || !ObjectId.isValid(id)) {
     res
       .status(400)
       .json(
@@ -967,7 +967,7 @@ export async function getMoviesWithMostRecentComments(
     // the collection
     {
       $match: {
-        year: { $type: "number", $gte: 1800, $lte: 2030 },
+        year: { $type: "number" },
       },
     },
   ];
@@ -1105,7 +1105,7 @@ export async function getMoviesByYearWithStats(
     // STAGE 1: Data quality filter
     {
       $match: {
-        year: { $type: "number", $gte: 1800, $lte: 2030 },
+        year: { $type: "number" },
       },
     },
     // STAGE 2: Group by year and calculate statistics
@@ -1209,7 +1209,7 @@ export async function getDirectorsWithMostMovies(
     {
       $match: {
         directors: { $exists: true, $ne: null, $not: { $eq: [] } },
-        year: { $type: "number", $gte: 1800, $lte: 2030 },
+        year: { $type: "number" },
       },
     },
     // STAGE 2: Unwind directors array

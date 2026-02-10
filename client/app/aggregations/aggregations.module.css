@@ -1,42 +1,53 @@
-/* Aggregations styles */
+/* Aggregations styles - MongoDB Branded */
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.5rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 0.5rem;
+  color: var(--mongodb-slate);
+  margin-bottom: 0.75rem;
   text-align: center;
 }
 
+.title::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: var(--mongodb-spring);
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
 .subtitle {
-  font-size: 1.1rem;
-  color: #666;
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
   text-align: center;
   margin-bottom: 3rem;
+  font-weight: 500;
 }
 
 .section {
   margin-bottom: 3rem;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--mongodb-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
   overflow: hidden;
+  border: 2px solid var(--mongodb-mint);
 }
 
 .sectionTitle {
   font-size: 1.5rem;
-  font-weight: 600;
-  color: #2c3e50;
+  font-weight: 700;
+  color: var(--mongodb-white);
   margin: 0;
   padding: 1.5rem 2rem;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e9ecef;
+  background: var(--mongodb-forest);
 }
 
 .tableContainer {
@@ -47,31 +58,34 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .table th {
-  background: #34495e;
-  color: white;
+  background: var(--mongodb-slate);
+  color: var(--mongodb-white);
   font-weight: 600;
-  padding: 1rem;
+  padding: 1.125rem 1.25rem;
   text-align: left;
   white-space: nowrap;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .table td {
-  padding: 1rem;
-  border-bottom: 1px solid #e9ecef;
+  padding: 1.125rem 1.25rem;
+  border-bottom: 1px solid var(--color-border);
   vertical-align: top;
 }
 
 .table tr:hover {
-  background: #f8f9fa;
+  background: #F7FAFC;
 }
 
 .movieTitle {
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--mongodb-slate);
   max-width: 200px;
   word-wrap: break-word;
 }
@@ -96,9 +110,9 @@
 .comment {
   margin-bottom: 0.75rem;
   padding: 0.5rem;
-  background: #f8f9fa;
-  border-radius: 4px;
-  border-left: 3px solid #3498db;
+  background: #F7FAFC;
+  border-radius: var(--radius-md);
+  border-left: 2px solid var(--color-border);
 }
 
 .comment:last-child {
@@ -107,14 +121,14 @@
 
 .commentText {
   font-size: 0.85rem;
-  color: #2c3e50;
+  color: var(--mongodb-slate);
   margin-bottom: 0.25rem;
   line-height: 1.4;
 }
 
 .commentMeta {
   font-size: 0.75rem;
-  color: #7f8c8d;
+  color: var(--color-text-muted);
   font-style: italic;
 }
 

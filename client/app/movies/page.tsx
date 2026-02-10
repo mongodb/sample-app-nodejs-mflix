@@ -544,33 +544,6 @@ export default function Movies() {
               </div>
             )}
 
-            {/* Batch Selection Controls */}
-            {!showAddForm && !showBatchEditForm && !showSearchModal && displayMovies.length > 0 && (
-              <div className={movieStyles.selectionControls}>
-                {selectedMovies.size > 0 && (
-                  <>
-                    <button
-                      onClick={handleBatchUpdate}
-                      disabled={isUpdating}
-                      className={movieStyles.batchUpdateButton}
-                      type="button"
-                    >
-                      {isUpdating ? 'Updating...' : `Update ${selectedMovies.size} Selected`}
-                    </button>
-                    
-                    <button
-                      onClick={handleBatchDelete}
-                      disabled={isDeleting}
-                      className={movieStyles.batchDeleteButton}
-                      type="button"
-                    >
-                      {isDeleting ? 'Deleting...' : `Delete ${selectedMovies.size} Selected`}
-                    </button>
-                  </>
-                )}
-              </div>
-            )}
-
             {!isSearchMode && (
               <button
                 onClick={handleAddMovie}
@@ -797,7 +770,7 @@ export default function Movies() {
             <div className={movieStyles.confirmationDialog}>
               <h3 className={movieStyles.confirmationTitle}>Confirm Batch Delete</h3>
               <p className={movieStyles.confirmationMessage}>
-                Are you sure you want to delete {selectedMovies.size} selected movie{selectedMovies.size !== 1 ? 's' : ''}? 
+                Are you sure you want to delete {selectedMovies.size} selected movie{selectedMovies.size !== 1 ? 's' : ''}?
                 This action cannot be undone.
               </p>
               <div className={movieStyles.confirmationActions}>
@@ -815,6 +788,44 @@ export default function Movies() {
                   disabled={isDeleting}
                 >
                   {isDeleting ? 'Deleting...' : 'Delete'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Contextual Bottom Selection Bar */}
+        {selectedMovies.size > 0 && !showAddForm && !showBatchEditForm && !showSearchModal && (
+          <div className={movieStyles.selectionBar}>
+            <div className={movieStyles.selectionBarContent}>
+              <div className={movieStyles.selectionInfo}>
+                <span className={movieStyles.selectionCount}>
+                  {selectedMovies.size} movie{selectedMovies.size !== 1 ? 's' : ''} selected
+                </span>
+                <button
+                  onClick={() => setSelectedMovies(new Set())}
+                  className={movieStyles.deselectAllButton}
+                  type="button"
+                >
+                  Deselect all
+                </button>
+              </div>
+              <div className={movieStyles.selectionActions}>
+                <button
+                  onClick={handleBatchUpdate}
+                  disabled={isUpdating}
+                  className={movieStyles.editSelectedButton}
+                  type="button"
+                >
+                  {isUpdating ? 'Updating...' : 'Edit Selected'}
+                </button>
+                <button
+                  onClick={handleBatchDelete}
+                  disabled={isDeleting}
+                  className={movieStyles.deleteSelectedButton}
+                  type="button"
+                >
+                  {isDeleting ? 'Deleting...' : 'Delete Selected'}
                 </button>
               </div>
             </div>

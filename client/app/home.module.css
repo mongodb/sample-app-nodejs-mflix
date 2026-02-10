@@ -1,6 +1,6 @@
 /**
- * Home Page Styles
- * 
+ * Home Page Styles - MongoDB Branded
+ *
  * Styles specific to the home/landing page
  */
 
@@ -12,84 +12,122 @@
   min-height: 100vh;
   padding: 2rem;
   text-align: center;
+  background: var(--mongodb-white);
 }
 
 .main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  max-width: 600px;
+  gap: 2.5rem;
+  max-width: 700px;
+  padding: 3rem;
+  background: var(--mongodb-white);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
 }
 
 .title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--mongodb-slate);
   margin: 0;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: var(--mongodb-spring);
+  margin: 1rem auto 0;
+  border-radius: 2px;
 }
 
 .description {
   font-size: 1.25rem;
-  color: #666;
+  color: var(--color-text-secondary);
   margin: 0;
-  line-height: 1.6;
+  line-height: 1.7;
+  max-width: 500px;
 }
 
 .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 2rem;
+  padding: 1.125rem 2.5rem;
   font-size: 1.1rem;
   font-weight: 600;
-  color: white;
-  background: #0066cc;
+  color: var(--mongodb-white);
+  background: var(--mongodb-forest);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   cursor: pointer;
-  min-width: 180px;
+  min-width: 200px;
+  box-shadow: var(--shadow-md);
 }
 
 .button:hover {
-  background: #0052a3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+  background: var(--mongodb-evergreen);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 104, 74, 0.4);
 }
 
 .button:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--mongodb-spring);
+  outline-offset: 3px;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
   .title {
-    font-size: 2.5rem;
+    font-size: 2.75rem;
   }
-  
+
   .description {
     font-size: 1.1rem;
   }
-  
+
   .page {
-    padding: 1rem;
+    padding: 1.5rem;
+  }
+
+  .main {
+    padding: 2rem;
   }
 }
 
 @media (max-width: 480px) {
   .title {
-    font-size: 2rem;
+    font-size: 2.25rem;
   }
-  
+
   .description {
     font-size: 1rem;
   }
-  
+
+  .page {
+    padding: 1rem;
+  }
+
+  .main {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
   .button {
-    padding: 0.875rem 1.5rem;
+    padding: 1rem 2rem;
     font-size: 1rem;
+    min-width: 180px;
   }
 }

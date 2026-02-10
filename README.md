@@ -14,6 +14,10 @@ This is a full-stack movie browsing application built with Express.js and Next.j
     └── tsconfig.json
 ```
 
+## Data Limitations
+
+The `sample_mflix` dataset contains movies released up to **2016**. Searching for movies from 2017 or later will return no results. This is a limitation of the sample dataset, not the application.
+
 ## Prerequisites
 
 - **Node.js 22** or higher

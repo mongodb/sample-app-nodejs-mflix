@@ -1,47 +1,60 @@
 /**
- * Edit Movie Form Styles
- * 
+ * Edit Movie Form Styles - MongoDB Branded
+ *
  * CSS Module for the edit movie form component.
  * Provides consistent styling with the rest of the application.
  */
 
 .formContainer {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--mongodb-white);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
   margin-bottom: 2rem;
+  border: 2px solid var(--mongodb-mint);
 }
 
 .formTitle {
-  font-size: 1.75rem;
-  font-weight: bold;
-  color: #333;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--mongodb-slate);
   margin: 0 0 1.5rem 0;
   text-align: center;
 }
 
+.formTitle::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--mongodb-spring);
+  margin: 0.75rem auto 0;
+  border-radius: 2px;
+}
+
 .batchDescription {
-  background-color: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
-  padding: 1rem;
+  background: var(--mongodb-mint);
+  border: 2px solid var(--mongodb-forest);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
   margin-bottom: 1.5rem;
-  color: #495057;
-  font-size: 0.9rem;
-  line-height: 1.4;
+  color: var(--mongodb-slate);
+  font-size: 0.95rem;
+  line-height: 1.5;
   text-align: center;
+  font-weight: 500;
 }
 
 .generalError {
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  color: #721c24;
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+  background: #fef2f2;
+  border: 2px solid var(--color-error);
+  color: #991b1b;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
   text-align: center;
+  font-weight: 600;
 }
 
 .form {
@@ -58,57 +71,59 @@
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.625rem;
 }
 
 .label {
-  font-weight: 500;
-  color: #333;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--mongodb-slate);
+  font-size: 0.95rem;
 }
 
 .input,
 .textarea {
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
+  padding: 0.875rem;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  background: white;
+  transition: all var(--transition-base);
+  background: var(--mongodb-white);
+  color: var(--mongodb-slate);
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: #0070f3;
-  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+  border-color: var(--mongodb-forest);
+  box-shadow: 0 0 0 3px rgba(0, 104, 74, 0.1);
 }
 
 .input:disabled,
 .textarea:disabled {
-  background: #f8f9fa;
-  color: #6c757d;
+  background: var(--color-border);
+  color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .inputError {
-  border-color: #dc2626 !important;
+  border-color: var(--color-error) !important;
 }
 
 .inputError:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1) !important;
 }
 
 .textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
   font-family: inherit;
 }
 
 .error {
-  color: #dc2626;
+  color: var(--color-error);
   font-size: 0.875rem;
-  margin-top: 0.25rem;
+  margin-top: 0.375rem;
+  font-weight: 500;
 }
 
 .listFields {
@@ -122,51 +137,54 @@
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e1e5e9;
+  padding-top: 2rem;
+  border-top: 2px solid var(--mongodb-mint);
+  margin-top: 1rem;
 }
 
 .button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 1.75rem;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 120px;
+  transition: all var(--transition-base);
+  min-width: 140px;
+  box-shadow: var(--shadow-sm);
 }
 
 .button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .saveButton {
-  background: #0070f3;
-  color: white;
-  border: 1px solid #0070f3;
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
+  border: 2px solid var(--mongodb-forest);
 }
 
 .saveButton:hover:not(:disabled) {
-  background: #0051cc;
-  border-color: #0051cc;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 112, 243, 0.3);
+  background: var(--mongodb-evergreen);
+  border-color: var(--mongodb-evergreen);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 104, 74, 0.4);
 }
 
 .cancelButton {
-  background: #6c757d;
-  color: white;
-  border: 1px solid #6c757d;
+  background: var(--mongodb-white);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
 }
 
 .cancelButton:hover:not(:disabled) {
-  background: #5a6268;
-  border-color: #5a6268;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+  background: var(--color-border);
+  border-color: var(--color-text-secondary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
 
 /* Multi-movie form styles */
