@@ -183,7 +183,7 @@ describe("Movie Controller Tests", () => {
       const testMovies = [{ _id: TEST_MOVIE_ID, title: "Action Movie" }];
       mockRequest.query = {
         genre: "Action",
-        year: "2024",
+        year: "2010",
         minRating: "7.0",
         limit: "10",
         sortBy: "year",
@@ -195,7 +195,7 @@ describe("Movie Controller Tests", () => {
 
       expect(mockFind).toHaveBeenCalledWith({
         genres: { $regex: new RegExp("Action", "i") },
-        year: 2024,
+        year: 2010,
         "imdb.rating": { $gte: 7.0 },
       });
       expect(mockCreateSuccessResponse).toHaveBeenCalledWith(
@@ -203,6 +203,7 @@ describe("Movie Controller Tests", () => {
         "Found 1 movies"
       );
     });
+
   });
 
   describe("getMovieById", () => {

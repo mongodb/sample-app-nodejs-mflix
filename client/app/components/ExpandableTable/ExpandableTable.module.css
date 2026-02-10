@@ -1,0 +1,109 @@
+.container {
+  position: relative;
+}
+
+.tableWrapper {
+  position: relative;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.collapsed {
+  max-height: 600px;
+}
+
+.expanded {
+  max-height: none;
+}
+
+.collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, transparent, var(--mongodb-white));
+  pointer-events: none;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+  margin-top: 1rem;
+}
+
+.expandButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  border-radius: 50px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.expandButton:hover {
+  color: var(--mongodb-forest);
+  background: #F7FAFC;
+}
+
+.expandButton:active {
+  transform: translateY(0);
+}
+
+.expandButton:active::before {
+  box-shadow: 0 4px 8px rgba(0, 104, 74, 0.15);
+}
+
+.expandButton:focus {
+  outline: none;
+}
+
+.expandButton:focus-visible::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--mongodb-spring);
+  border-radius: 50px;
+  animation: focusPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes focusPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.buttonIcon {
+  font-size: 0.75rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+}
+
+.expandButton:hover .buttonIcon {
+  transform: translateY(2px);
+}
+
+@media (max-width: 768px) {
+  .collapsed {
+    max-height: 400px;
+  }
+
+  .expandButton {
+    font-size: 0.875rem;
+    padding: 0.625rem 1.25rem;
+  }
+}
+

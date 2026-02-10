@@ -1,8 +1,8 @@
 /**
- * Movies Card Styles
- * 
- * CSS Module for the movies card component.
- * Provides responsive grid layout for the movies listing page.
+ * Movies Page Styles - MongoDB Branded
+ *
+ * CSS Module for the movies listing page.
+ * Provides responsive grid layout and controls.
  */
 
 .pageHeader {
@@ -36,49 +36,52 @@
 }
 
 .searchButton {
-  padding: 0.75rem 1.5rem;
-  background: #0070f3;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  background: var(--mongodb-white);
+  color: var(--mongodb-forest);
+  border: 2px solid var(--mongodb-forest);
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 160px;
+  box-shadow: var(--shadow-sm);
 }
 
 .searchButton:hover:not(:disabled) {
-  background: #0051cc;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 112, 243, 0.3);
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 104, 74, 0.4);
 }
 
 .searchButton:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
 .clearSearchButton {
-  padding: 0.5rem 1rem;
-  background: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  background: var(--mongodb-white);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .clearSearchButton:hover:not(:disabled) {
-  background: #5a6268;
+  background: var(--color-border);
+  border-color: var(--color-text-secondary);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Search Pagination Styles */
@@ -87,7 +90,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .paginationContainer {
@@ -102,124 +105,144 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.75rem 1.5rem;
-  background: #fff;
-  color: #0070f3;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  background: transparent;
+  color: var(--mongodb-forest);
+  border: none;
+  border-radius: var(--radius-sm);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  transition: all var(--transition-base);
   min-width: fit-content;
-  cursor: pointer;
+  position: relative;
+}
+
+.pageButton::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--mongodb-forest);
+  transform: scaleX(0);
+  transition: transform var(--transition-base);
+}
+
+.pageButton:hover:not(.disabled):not(:disabled)::after {
+  transform: scaleX(1);
 }
 
 .pageButton:hover:not(.disabled):not(:disabled) {
-  background: #0070f3;
-  color: white;
-  border-color: #0070f3;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 112, 243, 0.2);
+  color: var(--mongodb-evergreen);
+  background: rgba(0, 104, 74, 0.05);
+}
+
+.pageButton:active:not(.disabled):not(:disabled) {
+  background: rgba(0, 104, 74, 0.1);
 }
 
 .pageButton.disabled,
 .pageButton:disabled {
-  background: #f5f5f5;
-  color: #999;
-  border-color: #eee;
+  color: var(--color-text-muted);
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 .pageInfo {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  padding: 0.75rem 1rem;
-  background: #f8f9fa;
-  border-radius: 6px;
-  border: 1px solid #e9ecef;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--mongodb-slate);
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border-radius: var(--radius-md);
 }
 
 .additionalInfo {
-  font-size: 0.85rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
   text-align: center;
+  font-weight: 500;
 }
 
 .searchInfo {
   margin: 2rem 0;
-  padding: 1rem;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
-  border-radius: 8px;
+  padding: 1.25rem;
+  background: var(--mongodb-mint);
+  border: 2px solid var(--mongodb-forest);
+  border-radius: var(--radius-lg);
   text-align: center;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.95rem;
+  color: var(--mongodb-slate);
+  font-weight: 500;
 }
 
 .selectAllButton {
-  padding: 0.5rem 1rem;
-  background: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  background: var(--mongodb-white);
+  color: var(--mongodb-forest);
+  border: 2px solid var(--mongodb-forest);
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .selectAllButton:hover {
-  background: #5a6268;
+  background: var(--mongodb-mint);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .batchDeleteButton {
-  padding: 0.5rem 1rem;
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  background: var(--mongodb-white);
+  color: var(--color-error);
+  border: 2px solid var(--color-error);
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
 }
 
 .batchDeleteButton:hover:not(:disabled) {
-  background: #c82333;
+  background: var(--color-error);
+  color: var(--mongodb-white);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
 }
 
 .batchDeleteButton:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
 .batchUpdateButton {
-  padding: 0.5rem 1rem;
-  background: #28a745;
-  color: white;
+  padding: 0.625rem 1.25rem;
+  background: var(--mongodb-spring);
+  color: var(--mongodb-slate);
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
 }
 
 .batchUpdateButton:hover:not(:disabled) {
-  background: #218838;
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 237, 100, 0.4);
 }
 
 .batchUpdateButton:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
@@ -230,142 +253,278 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 30, 43, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   padding: 20px;
+  backdrop-filter: blur(4px);
 }
 
 .confirmationDialog {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  max-width: 400px;
+  background: var(--mongodb-white);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  max-width: 450px;
   width: 100%;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-xl);
+  border: 2px solid var(--mongodb-forest);
 }
 
 .confirmationTitle {
   margin: 0 0 1rem 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #333;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--mongodb-slate);
   text-align: center;
 }
 
 .confirmationMessage {
-  margin: 0 0 1.5rem 0;
-  color: #666;
+  margin: 0 0 2rem 0;
+  color: var(--color-text-secondary);
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.6;
+  font-size: 1rem;
 }
 
 .confirmationActions {
   display: flex;
-  gap: 12px;
+  gap: 1rem;
   justify-content: center;
 }
 
 .cancelButton {
-  padding: 0.75rem 1.5rem;
-  background: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  background: var(--mongodb-white);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 100px;
+  transition: all var(--transition-base);
+  min-width: 120px;
 }
 
 .cancelButton:hover {
-  background: #5a6268;
+  background: var(--color-border);
+  border-color: var(--color-text-secondary);
   transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .confirmDeleteButton {
-  padding: 0.75rem 1.5rem;
-  background: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 8px;
+  padding: 0.875rem 1.75rem;
+  background: var(--color-error);
+  color: var(--mongodb-white);
+  border: 2px solid var(--color-error);
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-width: 100px;
+  transition: all var(--transition-base);
+  min-width: 120px;
 }
 
 .confirmDeleteButton:hover:not(:disabled) {
-  background: #c82333;
+  background: #c53030;
+  border-color: #c53030;
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+  box-shadow: 0 6px 16px rgba(229, 62, 62, 0.4);
 }
 
 .confirmDeleteButton:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
 .pageTitle {
   margin: 0;
-  font-size: 32px;
-  color: #333;
+  font-size: 2.25rem;
+  color: var(--mongodb-slate);
+  font-weight: 700;
 }
 
 .addButton {
-  padding: 0.75rem 1.5rem;
-  background: #0070f3;
-  color: white;
+  padding: 0.875rem 1.75rem;
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 140px;
+  min-width: 160px;
+  box-shadow: var(--shadow-sm);
 }
 
 .addButton:hover:not(:disabled) {
-  background: #0051cc;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 112, 243, 0.3);
+  background: var(--mongodb-evergreen);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 104, 74, 0.4);
 }
 
 .addButton:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Floating Contextual Selection Bar */
+.selectionBar {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 650px;
+  max-width: 700px;
+  width: calc(100% - 2rem);
+  background: var(--mongodb-white);
+  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 100;
+  padding: 1rem 1.5rem;
+  animation: floatUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateX(-50%) translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+.selectionBarContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: nowrap;
+}
+
+.selectionInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+
+.selectionCount {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--mongodb-slate);
+}
+
+.deselectAllButton {
+  padding: 0.5rem 0;
+  background: transparent;
+  color: var(--mongodb-forest);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.deselectAllButton:hover {
+  color: var(--mongodb-evergreen);
+  text-decoration-thickness: 2px;
+}
+
+.selectionActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+.editSelectedButton {
+  padding: 0.625rem 1.25rem;
+  background: var(--mongodb-white);
+  color: var(--mongodb-forest);
+  border: 2px solid var(--mongodb-forest);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.editSelectedButton:hover:not(:disabled) {
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.editSelectedButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.deleteSelectedButton {
+  padding: 0.625rem 1.25rem;
+  background: var(--mongodb-white);
+  color: var(--color-error);
+  border: 2px solid var(--color-error);
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.deleteSelectedButton:hover:not(:disabled) {
+  background: var(--color-error);
+  color: var(--mongodb-white);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(229, 62, 62, 0.3);
+}
+
+.deleteSelectedButton:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
 }
 
 .successMessage {
-  background-color: #d1edff;
-  border: 1px solid #b8e6ff;
-  color: #0c5aa6;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  background: var(--mongodb-mint);
+  border: 2px solid var(--mongodb-spring);
+  color: var(--mongodb-evergreen);
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
 }
 
 .errorMessage {
-  background-color: #fef2f2;
-  border: 1px solid #fee2e2;
+  background: #fef2f2;
+  border: 2px solid var(--color-error);
   color: #991b1b;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  padding: 1.25rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1.5rem;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
 }
 
 .moviesGrid {
@@ -378,8 +537,10 @@
 
 .noMovies {
   text-align: center;
-  padding: 40px;
-  color: #666;
+  padding: 3rem;
+  color: var(--color-text-secondary);
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 /* Responsive Design */

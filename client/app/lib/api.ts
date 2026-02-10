@@ -585,11 +585,28 @@ export async function fetchMoviesByYear(): Promise<{ success: boolean; error?: s
         error: 'Request timed out after 15 seconds'
       };
     }
-    return { 
-      success: false, 
+    return {
+      success: false,
       error: error instanceof Error ? error.message : 'Network error occurred while fetching movies by year'
     };
   }
+}
+
+/**
+ * Fetch the min and max year bounds from the available movie data.
+ * This allows dynamic detection of the dataset's year range.
+ */
+export async function fetchYearBounds(): Promise<{ success: boolean; minYear?: number; maxYear?: number; error?: string }> {
+  const result = await fetchMoviesByYear();
+  if (!result.success || !result.data || result.data.length === 0) {
+    return { success: false, error: result.error || 'No year data available' };
+  }
+  const years = result.data.map(stat => stat.year);
+  return {
+    success: true,
+    minYear: Math.min(...years),
+    maxYear: Math.max(...years)
+  };
 }
 
 /**

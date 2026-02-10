@@ -11,6 +11,15 @@ import { Movie } from '@/types/movie';
 import { ROUTES } from '@/lib/constants';
 import pageStyles from './page.module.css';
 
+/**
+ * Validates that a poster URL is valid for Next.js Image component.
+ * Must be an absolute URL (http/https) or a relative path starting with /
+ */
+const isValidPosterUrl = (url: string | undefined): boolean => {
+  if (!url || typeof url !== 'string') return false;
+  return url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/');
+};
+
 interface MovieDetailsPageProps {
   params: Promise<{
     id: string;
@@ -202,7 +211,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsPageProps) {
         ) : (
           <div className={pageStyles.movieDetails}>
             <div className={pageStyles.posterSection}>
-              {movie.poster ? (
+              {isValidPosterUrl(movie.poster) ? (
                 <div className={pageStyles.posterContainer}>
                   <Image
                     src={movie.poster!}

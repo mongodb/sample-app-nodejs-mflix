@@ -22,14 +22,14 @@
 }
 
 .backLink a {
-  color: #0070f3;
+  color: var(--mongodb-forest);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
 .backLink a:hover {
-  color: #0051cc;
+  color: var(--mongodb-evergreen);
   text-decoration: underline;
 }
 

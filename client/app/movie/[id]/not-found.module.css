@@ -31,7 +31,7 @@
 }
 
 .backLink {
-  color: #0070f3;
+  color: var(--mongodb-forest);
   text-decoration: none;
   font-size: 1.1rem;
   font-weight: 500;
@@ -39,12 +39,12 @@
 }
 
 .backLink:hover {
-  color: #0051cc;
+  color: var(--mongodb-evergreen);
   text-decoration: underline;
 }
 
 .backLink:focus {
-  outline: 2px solid #0070f3;
+  outline: 2px solid var(--mongodb-forest);
   outline-offset: 2px;
   border-radius: 4px;
 }

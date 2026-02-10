@@ -1,6 +1,6 @@
 /**
- * Action Buttons Styles
- * 
+ * Action Buttons Styles - MongoDB Branded
+ *
  * CSS Module for the action buttons component.
  * Provides consistent styling with the rest of the application.
  */
@@ -10,53 +10,67 @@
   gap: 1rem;
   margin-bottom: 2rem;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 1.75rem;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-base);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
+  min-width: 140px;
+  box-shadow: var(--shadow-sm);
 }
 
 .button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .editButton {
-  background: #0070f3;
-  color: white;
-  border: 1px solid #0070f3;
+  background: var(--mongodb-forest);
+  color: var(--mongodb-white);
+  border: 2px solid var(--mongodb-forest);
 }
 
 .editButton:hover:not(:disabled) {
-  background: #0051cc;
-  border-color: #0051cc;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 112, 243, 0.3);
+  background: var(--mongodb-evergreen);
+  border-color: var(--mongodb-evergreen);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 104, 74, 0.4);
+}
+
+.editButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 .deleteButton {
-  background: #dc2626;
-  color: white;
-  border: 1px solid #dc2626;
+  background: var(--mongodb-white);
+  color: var(--color-error);
+  border: 2px solid var(--color-error);
 }
 
 .deleteButton:hover:not(:disabled) {
-  background: #b91c1c;
-  border-color: #b91c1c;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(220, 38, 38, 0.3);
+  background: var(--color-error);
+  color: var(--mongodb-white);
+  border-color: var(--color-error);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(229, 62, 62, 0.4);
+}
+
+.deleteButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Responsive Design */
@@ -68,17 +82,18 @@
 
   .button {
     width: 100%;
-    padding: 0.875rem 1rem;
+    padding: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .actionButtons {
-    gap: 0.5rem;
+    gap: 0.625rem;
   }
 
   .button {
-    padding: 0.75rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.875rem 1rem;
+    font-size: 0.95rem;
+    min-width: 120px;
   }
 }
