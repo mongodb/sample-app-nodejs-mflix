@@ -32,10 +32,15 @@ const PORT = process.env.PORT || 3001;
  * CORS Configuration
  * Allows the frontend to communicate with this Express backend
  * In production, this should be configured to only allow specific origins
+ * Supports multiple origins via comma-separated CORS_ORIGINS environment variable
  */
+const corsOrigins = (process.env.CORS_ORIGINS || "http://localhost:3000")
+  .split(",")
+  .map((origin) => origin.trim());
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin: corsOrigins.length === 1 ? corsOrigins[0] : corsOrigins,
     credentials: true,
   })
 );
