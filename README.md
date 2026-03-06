@@ -1,4 +1,4 @@
-# JavaScript Express.js MongoDB Sample MFlix Application
+# Node Express.js MongoDB Sample MFlix Application
 
 This is a full-stack movie browsing application built with Express.js and Next.js, demonstrating MongoDB operations using the `sample_mflix` dataset. The application showcases CRUD operations, aggregations, and MongoDB Search using the native MongoDB Node.js driver.
 
@@ -26,6 +26,16 @@ The `sample_mflix` dataset contains movies released up to **2016**. Searching fo
 - **npm** (included with Node.js)
 - **Voyage AI API key** (For MongoDB Vector Search)
   - [Get a Voyage AI API key](https://www.voyageai.com/)
+
+## Verify Requirements
+
+Before getting started, run the verification script to check if you have the required runtime:
+
+```bash
+./check-requirements-js.sh --pre
+```
+
+This checks that Node.js and npm are installed with the correct versions. Run with `--help` for more options.
 
 ## Getting Started
 
@@ -61,7 +71,7 @@ NODE_ENV=development
 # CORS Configuration
 # Allowed origin for cross-origin requests (frontend URL)
 # For multiple origins, separate with commas
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGINS=http://localhost:3000
 
 # Optional: Enable MongoDB Search tests
 # Uncomment the following line to enable Search tests
@@ -89,7 +99,6 @@ From the `server` directory, run:
 npm run dev
 ```
 
-
 Or for production mode, run:
 
 ```bash
@@ -98,6 +107,7 @@ npm start
 ```
 
 The server will start on `http://localhost:3001`. You can verify it's running by visiting:
+
 - API root: http://localhost:3001/
 - API documentation (Swagger UI): http://localhost:3001/api-docs
 
@@ -126,6 +136,7 @@ The Next.js application will start on `http://localhost:3000`.
 ### 5. Access the Application
 
 Open your browser and navigate to:
+
 - **Frontend:** http://localhost:3000
 - **Backend API:** http://localhost:3001
 - **API Documentation:** http://localhost:3001/api-docs
@@ -147,6 +158,7 @@ Open your browser and navigate to:
 ### Backend Development
 
 The Express.js backend uses:
+
 - **Express.js 5** for REST API
 - **MongoDB Node.js Driver** for database operations
 - **TypeScript** for type safety
@@ -170,6 +182,7 @@ npm run test:coverage
 ### Frontend Development
 
 The Next.js frontend uses:
+
 - **React 19** with TypeScript
 - **Next.js 16** with App Router
 - **Turbopack** for fast development builds
@@ -196,6 +209,7 @@ npm start      # Starts production server
 ```
 
 The production build:
+
 - Minifies and optimizes JavaScript and CSS
 - Optimizes images and assets
 - Generates static pages where possible
@@ -209,6 +223,16 @@ To check code quality:
 cd client
 npm run lint
 ```
+
+## Verify Setup
+
+After completing the setup, run the full verification to ensure everything is configured correctly:
+
+```bash
+./check-requirements-js.sh
+```
+
+This checks your Node.js environment, npm dependencies, `.env` configuration, and frontend setup.
 
 ## Issues
 
