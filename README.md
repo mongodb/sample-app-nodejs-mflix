@@ -58,7 +58,7 @@ Edit the `.env` file and set your MongoDB connection string:
 ```env
 # MongoDB Connection
 # Replace with your MongoDB Atlas connection string or local MongoDB URI
-MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/sample_mflix?retryWrites=true&w=majority
+MONGODB_URI="mongodb+srv://<username>:<password>@<cluster>.mongodb.net/sample_mflix?retryWrites=true&w=majority"
 
 # Voyage AI Configuration
 # API key for Voyage AI embedding model (required for Vector Search)
