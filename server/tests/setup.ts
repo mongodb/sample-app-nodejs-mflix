@@ -7,6 +7,7 @@
 
 // Set test environment variables
 process.env.NODE_ENV = "test";
+process.env.RATE_LIMIT_MAX = "10000";
 process.env.MONGODB_URI = "mongodb://localhost:27017/test_sample_mflix";
 process.env.PORT = "3002";
 

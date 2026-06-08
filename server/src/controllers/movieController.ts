@@ -26,6 +26,13 @@ import {
 } from "../utils/errorHandler";
 import logger from "../utils/logger";
 import {
+  convertFilterObjectIds,
+  escapeRegexLiteral,
+  InvalidMongoQueryError,
+  sanitizeBatchFilter,
+  sanitizeUpdateFields,
+} from "../utils/mongoQuery";
+import {
   CreateMovieRequest,
   UpdateMovieRequest,
   RawSearchQuery,
@@ -82,9 +89,12 @@ export async function getAllMovies(req: Request, res: Response): Promise<void> {
     filter.$text = { $search: q };
   }
 
-  // Genre filtering
-  if (genre) {
-    filter.genres = { $regex: new RegExp(genre, "i") };
+  // Genre filtering (case-insensitive literal match; escape user input for regex safety)
+  const trimmedGenre = typeof genre === "string" ? genre.trim() : "";
+  if (trimmedGenre) {
+    filter.genres = {
+      $regex: new RegExp(escapeRegexLiteral(trimmedGenre), "i"),
+    };
   }
 
   // Year filtering
@@ -325,11 +335,26 @@ export async function updateMovie(req: Request, res: Response): Promise<void> {
 
   const moviesCollection = getCollection("movies");
 
+  let sanitizedUpdate: UpdateMovieRequest;
+  try {
+    sanitizedUpdate = sanitizeUpdateFields(
+      updateData as Record<string, unknown>
+    );
+  } catch (error) {
+    if (error instanceof InvalidMongoQueryError) {
+      res
+        .status(400)
+        .json(createErrorResponse(error.message, "INVALID_UPDATE"));
+      return;
+    }
+    throw error;
+  }
+
   // Use updateOne() to update a single document
   // $set operator replaces the value of fields with specified values
   const result = await moviesCollection.updateOne(
     { _id: new ObjectId(id) },
-    { $set: updateData }
+    { $set: sanitizedUpdate }
   );
 
   if (result.matchedCount === 0) {
@@ -388,23 +413,51 @@ export async function updateMoviesBatch(
 
   const moviesCollection = getCollection("movies");
 
-  // Handle ObjectId conversion for _id fields in $in queries
-  let processedFilter = { ...filter };
-  if (filter._id && filter._id.$in && Array.isArray(filter._id.$in)) {
-    // Convert string IDs to ObjectId instances
-    processedFilter._id = {
-      $in: filter._id.$in.map((id: string) => {
-        if (ObjectId.isValid(id)) {
-          return new ObjectId(id);
-        }
-        throw new Error(`Invalid ObjectId: ${id}`);
-      })
-    };
+  let sanitizedFilter: Document;
+  let sanitizedUpdate: UpdateMovieRequest;
+  let processedFilter: Document;
+
+  try {
+    sanitizedFilter = sanitizeBatchFilter(filter);
+  } catch (error) {
+    if (error instanceof InvalidMongoQueryError) {
+      res
+        .status(400)
+        .json(createErrorResponse(error.message, "INVALID_FILTER"));
+      return;
+    }
+    throw error;
+  }
+
+  try {
+    sanitizedUpdate = sanitizeUpdateFields(update);
+  } catch (error) {
+    if (error instanceof InvalidMongoQueryError) {
+      res
+        .status(400)
+        .json(createErrorResponse(error.message, "INVALID_UPDATE"));
+      return;
+    }
+    throw error;
+  }
+
+  try {
+    processedFilter = convertFilterObjectIds(sanitizedFilter);
+  } catch (error) {
+    if (error instanceof InvalidMongoQueryError) {
+      res
+        .status(400)
+        .json(createErrorResponse(error.message, "INVALID_OBJECT_ID"));
+      return;
+    }
+    throw error;
   }
 
   // Use updateMany() to update multiple documents
   // This is useful for bulk operations like updating all movies from a certain year
-  const result = await moviesCollection.updateMany(processedFilter, { $set: update });
+  const result = await moviesCollection.updateMany(processedFilter, {
+    $set: sanitizedUpdate,
+  });
 
   res.json(
     createSuccessResponse(
@@ -483,18 +536,31 @@ export async function deleteMoviesBatch(
 
   const moviesCollection = getCollection("movies");
 
-  // Handle ObjectId conversion for _id fields in $in queries
-  let processedFilter = { ...filter };
-  if (filter._id && filter._id.$in && Array.isArray(filter._id.$in)) {
-    // Convert string IDs to ObjectId instances
-    processedFilter._id = {
-      $in: filter._id.$in.map((id: string) => {
-        if (ObjectId.isValid(id)) {
-          return new ObjectId(id);
-        }
-        throw new Error(`Invalid ObjectId: ${id}`);
-      })
-    };
+  let sanitizedFilter: Document;
+  let processedFilter: Document;
+
+  try {
+    sanitizedFilter = sanitizeBatchFilter(filter);
+  } catch (error) {
+    if (error instanceof InvalidMongoQueryError) {
+      res
+        .status(400)
+        .json(createErrorResponse(error.message, "INVALID_FILTER"));
+      return;
+    }
+    throw error;
+  }
+
+  try {
+    processedFilter = convertFilterObjectIds(sanitizedFilter);
+  } catch (error) {
+    if (error instanceof InvalidMongoQueryError) {
+      res
+        .status(400)
+        .json(createErrorResponse(error.message, "INVALID_OBJECT_ID"));
+      return;
+    }
+    throw error;
   }
 
   // Use deleteMany() to remove multiple documents
