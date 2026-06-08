@@ -11,6 +11,7 @@ import dotenv from "dotenv";
 // Set test environment variables
 dotenv.config();
 process.env.NODE_ENV = "test";
+process.env.RATE_LIMIT_MAX = "10000";
 
 // Increase timeout for database operations in integration tests
 // Integration tests may take longer due to network calls and index creation

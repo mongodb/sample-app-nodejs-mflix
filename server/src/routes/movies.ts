@@ -18,8 +18,11 @@
 import express from "express";
 import { asyncHandler } from "../utils/errorHandler";
 import * as movieController from "../controllers/movieController";
+import { moviesRateLimiter } from "../middleware/rateLimiter";
 
 const router = express.Router();
+
+router.use(moviesRateLimiter);
 
 /**
  * @swagger
